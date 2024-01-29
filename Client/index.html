@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SIGNUP</title>
+  </head>
+  <body>
+    <button id="googleSignInBtn">Sign in with Google</button>
+
+    <script>
+      // JavaScript code to handle the button click
+      document
+        .getElementById("googleSignInBtn")
+        .addEventListener("click", function () {
+          // Redirect to the backend route that initiates Google OAuth
+          window.location.href = "http://localhost:3001/auth/google";
+        });
+    </script>
+  </body>
+</html>
