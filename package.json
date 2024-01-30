@@ -7,6 +7,7 @@
     "node-modules": "^1.0.1",
     "nodemon": "^3.0.3",
     "passport": "^0.7.0",
+    "passport-google-oauth2": "^0.2.0",
     "passport-google-oidc": "^0.1.0"
   },
   "name": "signup-with-google",

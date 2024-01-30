@@ -4,7 +4,6 @@ const session = require("express-session");
 // const GoogleStrategy = require("passport-google-oidc");
 const mongoose = require("mongoose");
 const { User } = require("./db/db");
-var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
 require("dotenv").config();
 const mongodb_URL = process.env.MONGODB_URL;
@@ -21,6 +20,8 @@ db.on("error", console.error.bind(console, "MongoDB connection error:"));
 db.once("open", () => {
   console.log("Connected to MongoDB");
 });
+
+var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
 app.use(
   session({
@@ -53,7 +54,7 @@ passport.use(
     {
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      callbackURL: process.env.GOOGLE_CALLBACK_URL,
+      callbackURL: "http://localhost:3001/auth/google/callback",
       passReqToCallback: true,
     },
     async function (request, issuer, refresh, profile, cb) {
