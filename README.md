@@ -15,18 +15,19 @@ Make sure you have the following installed on your machine:
 
 ### Installation
 
-1. Clone the repository:
+1. Open terminal and Clone the repository:
 
-   ```bash
-   git clone https://github.com/your-username/SIGNUP-WITH-GOOGLE.git
+```bash
+git clone https://github.com/Lagnajit09/signup-with-Google.git
+```
    
 2. Navigate to the Server directory:
 
   ```bash
-    cd SIGNUP-WITH-GOOGLE/Server
+    cd signup-with-Google/Server
 ```
 
-3.Install dependencies:
+3. Install dependencies:
 
   ```bash
     npm install
