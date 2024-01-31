@@ -24,9 +24,10 @@ db.once("open", () => {
 
 app.use(
   session({
-    secret: process.env.SESSION_KEY,
-    resave: false,
-    saveUninitialized: true,
+    secret: process.env.SESSION_KEY, //used to sign the session ID cookie, providing additional security.
+    resave: false, //prevents the session from being saved to the store on every request, only saving when the session data has been modified.
+    saveUninitialized: true, //If set to true, it forces an uninitialized session to be saved to the store.
+    cookie: { httpOnly: true, sameSite: "Lax" },
   })
 );
 
@@ -127,16 +128,42 @@ app.get("/login", (req, res) => {
     passport.authenticate("google", { scope: ["email", "profile"] })(req, res);
   }
 });
+
+app.post("/logout", (req, res) => {
+  // Logout the user and redirect to the login page
+  req.logout((err) => {
+    if (err) {
+      // Handle errors, if any
+      return res.status(500).json({ msg: "Error during logout" });
+    }
+  });
+  res.clearCookie("sessionId"); // Clear the session ID cookie
+  // req.session.destroy((err) => {
+  //   if (err) {
+  //     console.error("Error destroying session:", err);
+  //   }
+  // });
+  res.redirect("/login");
+});
+
 app.get("/profile", (req, res) => {
   //   console.log(req.session);
 
   if (req.isAuthenticated()) {
     // If the user is authenticated, display the profile with the profile picture
     const user = req.user; // req.user contains the deserialized user object
+
     console.log(user);
+    console.log(req.sessionID);
+    console.log(req.session);
+
+    res.cookie("sessionId", req.sessionID, { httpOnly: true });
     res.send(`
         <h1>Welcome, ${user.name}!</h1>
         <img src="${user.profileImageUrl}" alt="Profile Picture">
+        <form action="/logout" method="post">
+          <button type="submit">Logout</button>
+        </form>
       `);
   } else {
     // If not authenticated, redirect to the login page
